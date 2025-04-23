@@ -17,3 +17,4 @@ export interface Property {
 export interface PropertyCardProps {
   property: Property;
 }
+

@@ -33,3 +33,4 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
     </div>
   );
 };
+
