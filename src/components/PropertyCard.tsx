@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Building, MapPin, Bed, ArrowsUpFromLine } from "lucide-react";
+import { Building, MapPin, Bed, ArrowsUpFromLine, Video, Cube, Trophy } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +15,9 @@ interface PropertyCardProps {
     sqft: number;
     imageUrl: string;
     status: "For Sale" | "For Rent" | "Sold";
+    has3DTour?: boolean;
+    hasVirtualTour?: boolean;
+    isPremium?: boolean;
   };
 }
 
@@ -51,10 +54,35 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
           )}
           style={{ backgroundImage: `url(${property.imageUrl})` }}
         />
-        <div className="absolute top-4 left-4">
+        
+        {/* Feature badges */}
+        <div className="absolute top-4 left-4 flex flex-col gap-2">
           <Badge className={cn("font-medium", statusColors[property.status])}>
             {property.status}
           </Badge>
+          
+          {property.isPremium && (
+            <Badge className="bg-estate-gold text-white font-medium">
+              <Trophy size={14} className="mr-1" />
+              Premium
+            </Badge>
+          )}
+        </div>
+
+        {/* Virtual tour badges */}
+        <div className="absolute top-4 right-4 flex flex-col gap-2">
+          {property.has3DTour && (
+            <Badge variant="secondary" className="backdrop-blur-md bg-white/30">
+              <Cube size={14} className="mr-1" />
+              3D Tour
+            </Badge>
+          )}
+          {property.hasVirtualTour && (
+            <Badge variant="secondary" className="backdrop-blur-md bg-white/30">
+              <Video size={14} className="mr-1" />
+              Virtual Tour
+            </Badge>
+          )}
         </div>
         
         {/* Price tag */}

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import PropertyCard from "./PropertyCard";
 import { Button } from "@/components/ui/button";
@@ -16,6 +15,9 @@ const sampleProperties = [
     sqft: 2100,
     imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     status: "For Sale" as const,
+    has3DTour: true,
+    hasVirtualTour: true,
+    isPremium: true,
   },
   {
     id: "2",
@@ -27,6 +29,8 @@ const sampleProperties = [
     sqft: 1500,
     imageUrl: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     status: "For Rent" as const,
+    has3DTour: true,
+    isPremium: true,
   },
   {
     id: "3",
@@ -38,6 +42,9 @@ const sampleProperties = [
     sqft: 2800,
     imageUrl: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     status: "For Sale" as const,
+    has3DTour: false,
+    hasVirtualTour: false,
+    isPremium: false,
   },
   {
     id: "4",
@@ -49,6 +56,9 @@ const sampleProperties = [
     sqft: 950,
     imageUrl: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     status: "For Rent" as const,
+    has3DTour: false,
+    hasVirtualTour: true,
+    isPremium: false,
   },
   {
     id: "5",
@@ -60,6 +70,9 @@ const sampleProperties = [
     sqft: 4200,
     imageUrl: "https://images.unsplash.com/photo-1613553507747-5f8d62ad5904?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     status: "For Sale" as const,
+    has3DTour: true,
+    hasVirtualTour: false,
+    isPremium: true,
   },
   {
     id: "6",
@@ -71,6 +84,9 @@ const sampleProperties = [
     sqft: 1850,
     imageUrl: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     status: "Sold" as const,
+    has3DTour: false,
+    hasVirtualTour: false,
+    isPremium: false,
   },
 ];
 
