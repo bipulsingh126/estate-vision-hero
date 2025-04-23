@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -20,38 +19,68 @@ export default {
 		},
 		extend: {
 			colors: {
-				border: 'hsl(var(--border))',
-				input: 'hsl(var(--input))',
-				ring: 'hsl(var(--ring))',
-				background: 'hsl(var(--background))',
-				foreground: 'hsl(var(--foreground))',
+				// Light mode colors
+				border: {
+					DEFAULT: "hsl(var(--border))",
+					dark: "hsl(var(--border-dark))"
+				},
+				input: {
+					DEFAULT: "hsl(var(--input))",
+					dark: "hsl(var(--input-dark))"
+				},
+				ring: {
+					DEFAULT: "hsl(var(--ring))",
+					dark: "hsl(var(--ring-dark))"
+				},
+				background: {
+					DEFAULT: "hsl(var(--background))",
+					dark: "hsl(var(--background-dark))"
+				},
+				foreground: {
+					DEFAULT: "hsl(var(--foreground))",
+					dark: "hsl(var(--foreground-dark))"
+				},
 				primary: {
-					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					DEFAULT: "hsl(var(--primary))",
+					foreground: "hsl(var(--primary-foreground))",
+					dark: "hsl(var(--primary-dark))",
+					"dark-foreground": "hsl(var(--primary-dark-foreground))"
 				},
 				secondary: {
-					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
+					DEFAULT: "hsl(var(--secondary))",
+					foreground: "hsl(var(--secondary-foreground))",
+					dark: "hsl(var(--secondary-dark))",
+					"dark-foreground": "hsl(var(--secondary-dark-foreground))"
 				},
 				destructive: {
-					DEFAULT: 'hsl(var(--destructive))',
-					foreground: 'hsl(var(--destructive-foreground))'
+					DEFAULT: "hsl(var(--destructive))",
+					foreground: "hsl(var(--destructive-foreground))",
+					dark: "hsl(var(--destructive-dark))",
+					"dark-foreground": "hsl(var(--destructive-dark-foreground))"
 				},
 				muted: {
-					DEFAULT: 'hsl(var(--muted))',
-					foreground: 'hsl(var(--muted-foreground))'
+					DEFAULT: "hsl(var(--muted))",
+					foreground: "hsl(var(--muted-foreground))",
+					dark: "hsl(var(--muted-dark))",
+					"dark-foreground": "hsl(var(--muted-dark-foreground))"
 				},
 				accent: {
-					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
+					DEFAULT: "hsl(var(--accent))",
+					foreground: "hsl(var(--accent-foreground))",
+					dark: "hsl(var(--accent-dark))",
+					"dark-foreground": "hsl(var(--accent-dark-foreground))"
 				},
 				popover: {
-					DEFAULT: 'hsl(var(--popover))',
-					foreground: 'hsl(var(--popover-foreground))'
+					DEFAULT: "hsl(var(--popover))",
+					foreground: "hsl(var(--popover-foreground))",
+					dark: "hsl(var(--popover-dark))",
+					"dark-foreground": "hsl(var(--popover-dark-foreground))"
 				},
 				card: {
-					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
+					DEFAULT: "hsl(var(--card))",
+					foreground: "hsl(var(--card-foreground))",
+					dark: "hsl(var(--card-dark))",
+					"dark-foreground": "hsl(var(--card-dark-foreground))"
 				},
 				estate: {
 					navy: '#1A1F2C',

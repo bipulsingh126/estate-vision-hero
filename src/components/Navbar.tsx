@@ -1,8 +1,8 @@
-
 import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Building, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "./ThemeToggle";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -33,7 +33,7 @@ const Navbar = () => {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
-          ? "bg-white/90 backdrop-blur-md shadow-md py-3"
+          ? "bg-background/90 dark:bg-background/90 backdrop-blur-md shadow-md py-3"
           : "bg-transparent py-5"
       )}
     >
@@ -60,8 +60,9 @@ const Navbar = () => {
             ))}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* Actions */}
+          <div className="hidden md:flex items-center gap-4">
+            <ThemeToggle />
             <Button>Schedule a Tour</Button>
           </div>
 
