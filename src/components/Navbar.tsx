@@ -1,12 +1,15 @@
+
 import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Building, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
+import { useTheme } from "./ThemeProvider";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,7 +36,7 @@ const Navbar = () => {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
-          ? "bg-background/90 dark:bg-background/90 backdrop-blur-md shadow-md py-3"
+          ? "bg-background/90 backdrop-blur-md shadow-md py-3"
           : "bg-transparent py-5"
       )}
     >
@@ -41,8 +44,8 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <a href="#" className="flex items-center gap-2">
-            <Building className="h-8 w-8 text-estate-navy" />
-            <span className="font-montserrat text-xl font-bold text-estate-navy">
+            <Building className="h-8 w-8 text-primary dark:text-primary" />
+            <span className="font-montserrat text-xl font-bold text-estate-navy dark:text-white">
               Estate<span className="text-estate-gold">Vision</span>
             </span>
           </a>
@@ -67,12 +70,15 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Toggle */}
-          <button
-            className="md:hidden text-estate-navy"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="flex md:hidden items-center gap-2">
+            <ThemeToggle />
+            <button
+              className="text-foreground"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
