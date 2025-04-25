@@ -12,9 +12,9 @@ export interface Property {
   has3DTour?: boolean;
   hasVirtualTour?: boolean;
   isPremium?: boolean;
+  description?: string;
 }
 
 export interface PropertyCardProps {
   property: Property;
 }
-

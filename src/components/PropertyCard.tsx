@@ -27,7 +27,9 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
       
       <div className="p-4">
         <h3 className="font-semibold text-lg mb-2 line-clamp-1">{property.title}</h3>
-        <p className="text-muted-foreground line-clamp-2 mb-4">{property.description}</p>
+        <p className="text-muted-foreground line-clamp-2 mb-4">
+          {property.description || "Beautiful property in a prime location."}
+        </p>
         
         <div className="flex justify-between items-center">
           <span className="text-lg font-semibold">${property.price.toLocaleString()}</span>
