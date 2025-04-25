@@ -1,8 +1,8 @@
-
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AgentCard from "@/components/agent/AgentCard";
+import { Agent } from "@/types/agent";
 
 // Sample agent data
 const sampleAgents: Agent[] = [
