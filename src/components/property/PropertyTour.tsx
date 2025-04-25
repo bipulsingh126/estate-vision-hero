@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { FileVideo, FileImage } from "lucide-react";
 import { Property } from "@/types/property";
+import { PropertyTour3D } from "./PropertyTour3D";
+import { PropertyTourVirtual } from "./PropertyTourVirtual";
 
 interface PropertyTourProps {
   property: Property;
@@ -24,12 +26,9 @@ export const PropertyTour = ({ property }: PropertyTourProps) => {
               View 3D Tour
             </Button>
           </DrawerTrigger>
-          <DrawerContent>
+          <DrawerContent className="h-[80vh]">
             <div className="p-6">
-              <div className="aspect-video w-full bg-muted rounded-lg flex items-center justify-center">
-                {/* This is where you would integrate your actual 3D tour provider */}
-                <p className="text-muted-foreground">3D Tour Placeholder</p>
-              </div>
+              <PropertyTour3D property={property} />
             </div>
           </DrawerContent>
         </Drawer>
@@ -43,12 +42,9 @@ export const PropertyTour = ({ property }: PropertyTourProps) => {
               Virtual Tour
             </Button>
           </DrawerTrigger>
-          <DrawerContent>
+          <DrawerContent className="h-[80vh]">
             <div className="p-6">
-              <div className="aspect-video w-full bg-muted rounded-lg flex items-center justify-center">
-                {/* This is where you would integrate your actual virtual tour provider */}
-                <p className="text-muted-foreground">Virtual Tour Placeholder</p>
-              </div>
+              <PropertyTourVirtual property={property} />
             </div>
           </DrawerContent>
         </Drawer>
