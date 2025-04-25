@@ -1,12 +1,12 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { PropertyFilters } from "@/property/PropertyFilters";
+import { PropertyFilters } from "@/components/property/PropertyFilters";
 import { PropertiesGrid } from "./property/PropertiesGrid";
 import { sampleProperties } from "@/data/sampleProperties";
 import { ContentTemplate } from "./templates/ContentTemplate";
 import { Property, PropertyFilters as PropertyFiltersType } from "@/types/property";
 import SearchFilters from "./SearchFilters";
+import { NoResultsFound } from "./property/NoResultsFound";
 
 const FeaturedListings = () => {
   const [activeFilter, setActiveFilter] = useState<string>("all");
@@ -109,24 +109,13 @@ const FeaturedListings = () => {
         {filteredProperties.length > 0 ? (
           <PropertiesGrid properties={filteredProperties} />
         ) : (
-          <div className="text-center py-12">
-            <h3 className="text-xl font-medium mb-2">No properties found</h3>
-            <p className="text-muted-foreground mb-6">
-              Try adjusting your search criteria to find more properties.
-            </p>
-            <Button 
-              variant="outline" 
-              onClick={() => setSearchFilters({
-                location: "",
-                propertyType: "",
-                bedrooms: "",
-                priceRange: [5000000],
-                searchTerm: ""
-              })}
-            >
-              Reset Filters
-            </Button>
-          </div>
+          <NoResultsFound onReset={() => setSearchFilters({
+            location: "",
+            propertyType: "",
+            bedrooms: "",
+            priceRange: [5000000],
+            searchTerm: ""
+          })} />
         )}
         
         <div className="mt-12 text-center">
