@@ -1,6 +1,7 @@
 
 import { Building, MapPin, Bed, ArrowsUpFromLine } from "lucide-react";
 import { Property } from "@/types/property";
+import { PropertyTour } from "./PropertyTour";
 
 interface PropertyDetailsProps {
   property: Property;
@@ -30,7 +31,9 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
           <span className="text-sm">{property.sqft} sqft</span>
         </div>
       </div>
+
+      {/* Property Tour Options */}
+      <PropertyTour property={property} />
     </div>
   );
 };
-
