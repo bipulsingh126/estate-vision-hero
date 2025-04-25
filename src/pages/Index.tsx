@@ -2,7 +2,6 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import SearchFilters from "@/components/SearchFilters";
 import FeaturedListings from "@/components/FeaturedListings";
 import AboutSection from "@/components/AboutSection";
 import ContactForm from "@/components/ContactForm";
@@ -15,13 +14,10 @@ const Index = () => {
       <Navbar />
       <Hero />
       
-      {/* Search Filters */}
+      {/* Featured Listings with Search */}
       <div className="container-custom">
-        <SearchFilters />
+        <FeaturedListings />
       </div>
-      
-      {/* Featured Listings */}
-      <FeaturedListings />
       
       {/* About Section */}
       <AboutSection />
