@@ -4,22 +4,26 @@ import { PropertyBadges } from "./property/PropertyBadges";
 import { PropertyDetails } from "./property/PropertyDetails";
 import { cn } from "@/lib/utils";
 import { PropertyCardProps } from "@/types/property";
+import { IndianRupee } from "lucide-react";
 
 const PropertyCard = ({ property }: PropertyCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(price);
+    if (price >= 10000000) {
+      return `${(price / 10000000).toFixed(2)} Cr`;
+    } else if (price >= 100000) {
+      return `${(price / 100000).toFixed(2)} Lac`;
+    } else {
+      return new Intl.NumberFormat("en-IN", {
+        maximumSignificantDigits: 3,
+      }).format(price);
+    }
   };
 
   return (
     <div
-      className="property-card group bg-white shadow-property hover:shadow-property-hover"
+      className="property-card group bg-white shadow-property hover:shadow-property-hover relative"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -37,9 +41,10 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
         
         {/* Price tag */}
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-estate-navy/80 to-transparent p-4">
-          <div className="text-white font-semibold text-xl">
+          <div className="text-white font-semibold text-xl flex items-center gap-1">
+            <IndianRupee className="h-5 w-5" />
             {formatPrice(property.price)}
-            {property.status === "For Rent" && <span className="text-sm font-normal ml-1">/month</span>}
+            {property.status === "For Rent" && <span className="text-sm font-normal">/month</span>}
           </div>
         </div>
       </div>
@@ -62,4 +67,3 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
 };
 
 export default PropertyCard;
-

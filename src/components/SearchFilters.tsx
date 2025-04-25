@@ -14,9 +14,21 @@ import { Slider } from "@/components/ui/slider";
 import { Search, MapPin } from "lucide-react";
 
 const SearchFilters = () => {
-  const [priceRange, setPriceRange] = useState<number[]>([500000]);
+  const [priceRange, setPriceRange] = useState<number[]>([5000000]);
   const [selectedType, setSelectedType] = useState<string>("");
   const [selectedBeds, setSelectedBeds] = useState<string>("");
+  const [selectedCity, setSelectedCity] = useState<string>("");
+
+  const indianCities = [
+    "Mumbai",
+    "Delhi",
+    "Bangalore",
+    "Hyderabad",
+    "Chennai",
+    "Kolkata",
+    "Pune",
+    "Ahmedabad",
+  ];
 
   return (
     <section className="py-6 lg:py-8 bg-white shadow-md -mt-20 rounded-lg relative z-10 mx-4 lg:mx-auto max-w-5xl">
@@ -27,14 +39,19 @@ const SearchFilters = () => {
             <Label htmlFor="location" className="text-sm font-medium mb-1.5 block">
               Location
             </Label>
-            <div className="relative">
-              <MapPin className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-              <Input
-                id="location"
-                placeholder="City, neighborhood, or address"
-                className="pl-10"
-              />
-            </div>
+            <Select value={selectedCity} onValueChange={setSelectedCity}>
+              <SelectTrigger id="location" className="w-full">
+                <MapPin className="mr-2 h-4 w-4 text-muted-foreground" />
+                <SelectValue placeholder="Select city" />
+              </SelectTrigger>
+              <SelectContent>
+                {indianCities.map((city) => (
+                  <SelectItem key={city} value={city.toLowerCase()}>
+                    {city}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Property Type */}
@@ -49,9 +66,9 @@ const SearchFilters = () => {
               <SelectContent>
                 <SelectItem value="house">House</SelectItem>
                 <SelectItem value="apartment">Apartment</SelectItem>
-                <SelectItem value="condo">Condo</SelectItem>
-                <SelectItem value="townhouse">Townhouse</SelectItem>
-                <SelectItem value="land">Land</SelectItem>
+                <SelectItem value="villa">Villa</SelectItem>
+                <SelectItem value="plot">Plot</SelectItem>
+                <SelectItem value="commercial">Commercial</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -91,24 +108,24 @@ const SearchFilters = () => {
               Price Range
             </Label>
             <span className="text-sm text-muted-foreground">
-              Up to ${priceRange[0].toLocaleString()}
+              Up to ₹{(priceRange[0] / 100000).toFixed(1)} Cr
             </span>
           </div>
           <Slider
             id="price-range"
-            defaultValue={[500000]}
-            max={5000000}
-            step={50000}
+            defaultValue={[5000000]}
+            max={50000000}
+            step={500000}
             onValueChange={setPriceRange}
             className="py-2"
           />
           <div className="flex justify-between text-xs text-muted-foreground mt-1">
-            <span>$0</span>
-            <span>$1M</span>
-            <span>$2M</span>
-            <span>$3M</span>
-            <span>$4M</span>
-            <span>$5M+</span>
+            <span>₹0</span>
+            <span>₹1 Cr</span>
+            <span>₹2 Cr</span>
+            <span>₹3 Cr</span>
+            <span>₹4 Cr</span>
+            <span>₹5+ Cr</span>
           </div>
         </div>
       </div>
