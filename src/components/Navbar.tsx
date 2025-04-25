@@ -1,104 +1,85 @@
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { Building, Menu, X } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "./ThemeToggle";
-import { useTheme } from "./ThemeProvider";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
+
+const navigation = [
+  { name: "Home", href: "/" },
+  { name: "Properties", href: "#properties" },
+  { name: "Agents", href: "/agents" },
+  { name: "About", href: "#about" },
+  { name: "Contact", href: "#contact" },
+];
 
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { theme } = useTheme();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const navLinks = [
-    { name: "Home", href: "#" },
-    { name: "Properties", href: "#properties" },
-    { name: "About", href: "#about" },
-    { name: "Contact", href: "#contact" },
-  ];
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled
-          ? "bg-background/90 backdrop-blur-md shadow-md py-3"
-          : "bg-transparent py-5"
-      )}
-    >
-      <div className="container-custom">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <a href="#" className="flex items-center gap-2">
-            <Building className="h-8 w-8 text-primary dark:text-primary" />
-            <span className="font-montserrat text-xl font-bold text-estate-navy dark:text-white">
-              Estate<span className="text-estate-gold">Vision</span>
-            </span>
-          </a>
+    <header className="sticky top-0 z-40 w-full border-b glass-effect">
+      <div className="container-custom flex h-16 items-center justify-between">
+        <Link to="/" className="flex items-center font-semibold">
+          {siteConfig.name}
+        </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="font-inter text-sm font-medium hover:text-primary transition-colors"
+        <div className="hidden md:flex items-center gap-6">
+          <nav className="flex gap-4">
+            {navigation.map((item) => (
+              <Link
+                key={item.href}
+                to={item.href}
+                className="text-sm font-medium transition-colors hover:text-primary"
               >
-                {link.name}
-              </a>
+                {item.name}
+              </Link>
             ))}
           </nav>
-
-          {/* Actions */}
-          <div className="hidden md:flex items-center gap-4">
-            <ThemeToggle />
-            <Button>Schedule a Tour</Button>
-          </div>
-
-          {/* Mobile Menu Toggle */}
-          <div className="flex md:hidden items-center gap-2">
-            <ThemeToggle />
-            <button
-              className="text-foreground"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+          <ThemeToggle />
         </div>
 
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <nav className="md:hidden py-5 animate-fade-in">
-            <div className="flex flex-col gap-4">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className="font-inter text-base py-2 px-4 hover:bg-muted rounded-md transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.name}
-                </a>
-              ))}
-              <Button className="mt-2">Schedule a Tour</Button>
+        <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+          <SheetTrigger asChild>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="md:hidden"
+              onClick={toggleMenu}
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="sm:w-64">
+            <div className="flex flex-col h-full justify-between">
+              <div>
+                <Link to="/" className="flex items-center font-semibold p-4">
+                  {siteConfig.name}
+                </Link>
+                <nav className="flex flex-col gap-4 p-4">
+                  {navigation.map((item) => (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      className="text-sm font-medium transition-colors hover:text-primary"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </nav>
+              </div>
+              <div className="p-4">
+                <ThemeToggle />
+              </div>
             </div>
-          </nav>
-        )}
+          </SheetContent>
+        </Sheet>
       </div>
     </header>
   );
