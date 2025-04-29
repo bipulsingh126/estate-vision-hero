@@ -1,24 +1,32 @@
-
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { ContentTemplate } from "../templates/ContentTemplate";
-import { Search } from "lucide-react";
+import React from 'react';
+import { SearchX } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface NoResultsFoundProps {
+  searchTerm?: string;
   onReset: () => void;
 }
 
-export const NoResultsFound = ({ onReset }: NoResultsFoundProps) => {
+const NoResultsFound: React.FC<NoResultsFoundProps> = ({ searchTerm, onReset }) => {
   return (
-    <ContentTemplate variant="gradient" className="py-10 text-center">
-      <Search className="mx-auto h-12 w-12 text-muted-foreground mb-4 opacity-50" />
-      <h3 className="text-xl font-medium mb-2">No properties found</h3>
-      <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-        We couldn't find any properties matching your search criteria. Try adjusting your filters or search term.
+    <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
+      <SearchX className="h-16 w-16 text-muted-foreground mb-4" strokeWidth={1.5} />
+      <h3 className="text-xl font-semibold mb-2">No properties found</h3>
+      <p className="text-muted-foreground mb-6 max-w-md">
+        {searchTerm ? (
+          <>
+            No properties match "<span className="font-medium">{searchTerm}</span>" with your current filter settings.
+          </>
+        ) : (
+          <>No properties match your current filter settings.</>
+        )}
       </p>
-      <Button onClick={onReset} variant="default">
+      <Button onClick={onReset} size="lg">
         Reset Filters
       </Button>
-    </ContentTemplate>
+    </div>
   );
 };
+
+export { NoResultsFound };
+export default NoResultsFound;

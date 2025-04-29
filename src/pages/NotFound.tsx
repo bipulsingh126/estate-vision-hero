@@ -4,11 +4,12 @@ import { useEffect } from "react";
 const NotFound = () => {
   const location = useLocation();
 
+  // Only log navigation to legitimate paths, not fragment identifiers 
   useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location.pathname
-    );
+    // Ignore fragment paths that start with #
+    if (!location.pathname.startsWith('#')) {
+      console.log(`Page not found: ${location.pathname}`);
+    }
   }, [location.pathname]);
 
   return (

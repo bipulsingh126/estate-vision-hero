@@ -1,5 +1,4 @@
-
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode, memo } from "react";
 
 type Theme = "dark" | "light" | "system";
 
@@ -20,13 +19,14 @@ const initialState: ThemeProviderState = {
 };
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
+ThemeProviderContext.displayName = "ThemeContext";
 
-export function ThemeProvider({
+const ThemeProviderComponent = ({
   children,
   defaultTheme = "system",
   storageKey = "ui-theme",
   ...props
-}: ThemeProviderProps) {
+}: ThemeProviderProps) => {
   // Initialize with a safe check for localStorage
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window !== 'undefined') {
@@ -85,6 +85,8 @@ export function ThemeProvider({
     </ThemeProviderContext.Provider>
   );
 }
+
+export const ThemeProvider = memo(ThemeProviderComponent);
 
 export const useTheme = () => {
   const context = useContext(ThemeProviderContext);

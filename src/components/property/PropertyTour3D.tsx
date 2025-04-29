@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Property } from "@/types/property";
 import { Eye } from "lucide-react";
@@ -13,9 +12,9 @@ export const PropertyTour3D = ({ property }: PropertyTour3DProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [loadError, setLoadError] = useState(false);
   
-  // Use a placeholder image and direct link to avoid CSP issues
-  const tourUrl = "https://my.matterport.com/show/?m=SxQL3iGyoDo";
-  const placeholderImage = "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1000&auto=format&fit=crop";
+  // Use property-specific tour URL if available, otherwise use default
+  const tourUrl = property.tourUrl3D || "https://my.matterport.com/show/?m=SxQL3iGyoDo";
+  const placeholderImage = property.imageUrl || "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1000&auto=format&fit=crop";
 
   const openTourInNewWindow = () => {
     window.open(tourUrl, "_blank", "noopener,noreferrer");

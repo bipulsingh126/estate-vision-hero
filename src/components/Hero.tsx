@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   const [tiltX, setTiltX] = useState(0);
@@ -87,16 +88,20 @@ const Hero = () => {
             modern living and exceptional comfort.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button size="lg" className="font-semibold">
-              View Properties
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border-white/30 font-semibold"
+            <Link to="/properties">
+              <Button size="lg" className="font-semibold">
+                View Properties
+              </Button>
+            </Link>
+            <Link to="/about">
+              <Button
+                variant="outline"
+                size="lg"
+                className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border-white/30 font-semibold"
             >
-              Learn More
-            </Button>
+                Learn More
+              </Button>
+            </Link>
           </div>
         </div>
 

@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Building } from "lucide-react";
 
@@ -118,14 +117,14 @@ const Footer = () => {
           </p>
           <div className="flex flex-wrap justify-center gap-4 text-sm text-white/60 mt-4 md:mt-0">
             {footerLinks.legal.map((link, index) => (
-              <React.Fragment key={link.name}>
+              <div key={link.name} className="flex items-center">
                 <a href={link.href} className="hover:text-white transition-colors">
                   {link.name}
                 </a>
                 {index < footerLinks.legal.length - 1 && (
-                  <span className="text-white/30">|</span>
+                  <span className="text-white/30 ml-4 mr-4">|</span>
                 )}
-              </React.Fragment>
+              </div>
             ))}
           </div>
         </div>

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Property } from "@/types/property";
 import { View } from "lucide-react";
@@ -13,8 +12,8 @@ export const PropertyTourVirtual = ({ property }: PropertyTourVirtualProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   
-  // Use a different video that may be less likely to be blocked
-  const videoUrl = "https://www.youtube-nocookie.com/embed/jNQXAC9IVRw";
+  // Use property-specific tour URL if available, otherwise use default
+  const videoUrl = property.tourUrlVirtual || "https://www.youtube-nocookie.com/embed/jNQXAC9IVRw";
   
   const handleIframeLoad = () => {
     setIsLoading(false);
@@ -63,6 +62,7 @@ export const PropertyTourVirtual = ({ property }: PropertyTourVirtualProps) => {
           />
         )}
       </div>
+      
       <Button
         variant="outline"
         size="sm"

@@ -1,7 +1,7 @@
-
-import { Building, MapPin, Bed, ArrowsUpFromLine } from "lucide-react";
+import { Building, MapPin, Bed, ArrowsUpFromLine, Video, Box } from "lucide-react";
 import { Property } from "@/types/property";
 import { PropertyTour } from "./PropertyTour";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface PropertyDetailsProps {
   property: Property;
@@ -31,6 +31,39 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
           <span className="text-sm">{property.sqft} sqft</span>
         </div>
       </div>
+
+      {/* Tour availability info */}
+      {(property.has3DTour || property.hasVirtualTour) && (
+        <Card className="mt-4 bg-muted/50">
+          <CardContent className="p-3">
+            <h4 className="text-sm font-medium mb-2">Available Tours</h4>
+            <div className="space-y-2">
+              {property.has3DTour && (
+                <div className="flex items-start gap-2">
+                  <Box size={16} className="mt-0.5 text-primary" />
+                  <div>
+                    <span className="text-sm font-medium">3D Tour</span>
+                    <p className="text-xs text-muted-foreground">
+                      Experience a fully interactive 3D walkthrough of this property.
+                    </p>
+                  </div>
+                </div>
+              )}
+              {property.hasVirtualTour && (
+                <div className="flex items-start gap-2">
+                  <Video size={16} className="mt-0.5 text-primary" />
+                  <div>
+                    <span className="text-sm font-medium">Virtual Tour</span>
+                    <p className="text-xs text-muted-foreground">
+                      Watch a guided video tour showcasing the property's highlights.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Property Tour Options */}
       <PropertyTour property={property} />

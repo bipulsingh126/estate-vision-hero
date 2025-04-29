@@ -1,7 +1,6 @@
-
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { Trophy, FileVideo, FileImage } from "lucide-react";
+import { Trophy, Video, Box } from "lucide-react";
 import { Property } from "@/types/property";
 
 interface PropertyBadgesProps {
@@ -35,13 +34,13 @@ export const PropertyBadges = ({ property }: PropertyBadgesProps) => {
       <div className="absolute top-4 right-4 flex flex-col gap-2">
         {property.has3DTour && (
           <Badge variant="secondary" className="backdrop-blur-md bg-white/30">
-            <FileImage size={14} className="mr-1" />
+            <Box size={14} className="mr-1" />
             3D Tour
           </Badge>
         )}
         {property.hasVirtualTour && (
           <Badge variant="secondary" className="backdrop-blur-md bg-white/30">
-            <FileVideo size={14} className="mr-1" />
+            <Video size={14} className="mr-1" />
             Virtual Tour
           </Badge>
         )}
