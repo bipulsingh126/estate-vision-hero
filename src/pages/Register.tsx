@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
@@ -5,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { toast } from 'sonner';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -35,8 +37,14 @@ const Register = () => {
     try {
       const success = await register(name, email, password);
       if (success) {
+        toast.success('Registration successful!');
         navigate('/');
+      } else {
+        setError('Registration failed. Please try again.');
       }
+    } catch (error) {
+      setError('An unexpected error occurred. Please try again.');
+      console.error('Registration error:', error);
     } finally {
       setIsLoading(false);
     }
@@ -122,4 +130,4 @@ const Register = () => {
   );
 };
 
-export default Register; 
+export default Register;
