@@ -13,10 +13,12 @@ export const sampleProperties: Property[] = [
     status: "For Sale",
     has3DTour: true,
     hasVirtualTour: true,
+    hasFloorPlan: true,
     propertyType: "Apartment",
     city: "New York",
     tourUrl3D: "https://my.matterport.com/show/?m=SxQL3iGyoDo",
-    tourUrlVirtual: "https://www.youtube-nocookie.com/embed/jNQXAC9IVRw"
+    tourUrlVirtual: "https://www.youtube-nocookie.com/embed/jNQXAC9IVRw",
+    floorPlanUrl: "https://images.unsplash.com/photo-1581922819941-6ab31ab79afc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "2",
@@ -30,10 +32,12 @@ export const sampleProperties: Property[] = [
     status: "For Sale",
     hasVirtualTour: true,
     has3DTour: true,
+    hasFloorPlan: true,
     propertyType: "Villa",
     city: "Miami",
     tourUrl3D: "https://my.matterport.com/show/?m=NjVisrEVhYu",
-    tourUrlVirtual: "https://www.youtube-nocookie.com/embed/THCEJJgw7ss"
+    tourUrlVirtual: "https://www.youtube-nocookie.com/embed/THCEJJgw7ss",
+    floorPlanUrl: "https://images.unsplash.com/photo-1595082622355-c9840b8a76a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "3",
@@ -61,10 +65,12 @@ export const sampleProperties: Property[] = [
     isPremium: true,
     has3DTour: true,
     hasVirtualTour: true,
+    hasFloorPlan: true,
     propertyType: "Penthouse",
     city: "Los Angeles",
     tourUrl3D: "https://my.matterport.com/show/?m=aSx4eRiauqm",
-    tourUrlVirtual: "https://www.youtube-nocookie.com/embed/EkQYf1Xn_Qo"
+    tourUrlVirtual: "https://www.youtube-nocookie.com/embed/EkQYf1Xn_Qo",
+    floorPlanUrl: "https://images.unsplash.com/photo-1595609044302-45f8f8f4d4d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "5",
@@ -135,9 +141,11 @@ export const sampleProperties: Property[] = [
     status: "For Sale" as const,
     has3DTour: true,
     hasVirtualTour: true,
+    hasFloorPlan: true,
     isPremium: false,
     tourUrl3D: "https://my.matterport.com/show/?m=VAjwMvxvCCt",
-    tourUrlVirtual: "https://www.youtube-nocookie.com/embed/KV0C6qzxjRY"
+    tourUrlVirtual: "https://www.youtube-nocookie.com/embed/KV0C6qzxjRY",
+    floorPlanUrl: "https://images.unsplash.com/photo-1580216143857-df3c20bae708?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "10",
@@ -183,11 +191,13 @@ export const sampleProperties: Property[] = [
     status: "For Sale" as const,
     has3DTour: true,
     hasVirtualTour: true,
+    hasFloorPlan: true,
     isPremium: true,
     propertyType: "Estate",
     city: "Lake Tahoe",
     tourUrl3D: "https://my.matterport.com/show/?m=NjVisrEVhYu",
-    tourUrlVirtual: "https://www.youtube-nocookie.com/embed/THCEJJgw7ss"
+    tourUrlVirtual: "https://www.youtube-nocookie.com/embed/THCEJJgw7ss",
+    floorPlanUrl: "https://images.unsplash.com/photo-1628624747186-a941c476b7ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "13",

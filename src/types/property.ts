@@ -1,4 +1,3 @@
-
 export interface Property {
   id: string;
   title: string;
@@ -18,6 +17,8 @@ export interface Property {
   cityName?: string; // Added for popup display
   tourUrl3D?: string; // URL for 3D Tour
   tourUrlVirtual?: string; // URL for Virtual Tour
+  floorPlanUrl?: string; // URL for Floor Plan
+  hasFloorPlan?: boolean; // Whether property has a floor plan
   lat?: number; // Latitude for map location
   lng?: number; // Longitude for map location
   type?: string; // Property type like 'Apartment', 'House', etc.
@@ -39,6 +40,7 @@ export interface PropertyFilters {
   // Advanced filters
   hasVirtualTour?: boolean;
   has3DTour?: boolean;
+  hasFloorPlan?: boolean;
   isPremium?: boolean;
   status?: string;
   sortBy?: 'price-asc' | 'price-desc' | 'newest' | 'oldest';

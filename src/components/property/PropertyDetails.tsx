@@ -1,7 +1,9 @@
-import { Building, MapPin, Bed, ArrowsUpFromLine, Video, Box } from "lucide-react";
+import { Building, MapPin, Bed, ArrowsUpFromLine, Video, Box, LayoutTemplate } from "lucide-react";
 import { Property } from "@/types/property";
 import { PropertyTour } from "./PropertyTour";
+import { PropertyFloorPlan } from "./PropertyFloorPlan";
 import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface PropertyDetailsProps {
   property: Property;
@@ -33,7 +35,7 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
       </div>
 
       {/* Tour availability info */}
-      {(property.has3DTour || property.hasVirtualTour) && (
+      {(property.has3DTour || property.hasVirtualTour || property.hasFloorPlan) && (
         <Card className="mt-4 bg-muted/50">
           <CardContent className="p-3">
             <h4 className="text-sm font-medium mb-2">Available Tours</h4>
@@ -60,6 +62,17 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
                   </div>
                 </div>
               )}
+              {property.hasFloorPlan && (
+                <div className="flex items-start gap-2">
+                  <LayoutTemplate size={16} className="mt-0.5 text-primary" />
+                  <div>
+                    <span className="text-sm font-medium">Interactive Floor Plan</span>
+                    <p className="text-xs text-muted-foreground">
+                      Explore the property layout with our interactive floor plan.
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -67,6 +80,13 @@ export const PropertyDetails = ({ property }: PropertyDetailsProps) => {
 
       {/* Property Tour Options */}
       <PropertyTour property={property} />
+      
+      {/* Floor Plan (if available) */}
+      {property.hasFloorPlan && (
+        <div className="mt-6">
+          <PropertyFloorPlan property={property} />
+        </div>
+      )}
     </div>
   );
 };

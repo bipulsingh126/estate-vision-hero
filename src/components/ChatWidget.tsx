@@ -172,6 +172,19 @@ const ChatWidget = () => {
     }
   }, [messages]);
 
+  // Filter messages by tab and agent
+  const filteredMessages = React.useMemo(() => {
+    if (currentTab === 'chatbot') {
+      return messages.filter(msg => msg.sender !== 'agent');
+    } else if (currentTab === 'live' && selectedAgent) {
+      return messages.filter(msg => 
+        (msg.sender === 'agent' && msg.agentId === selectedAgent) || 
+        (msg.sender === 'user' && (msg.agentId === selectedAgent || msg.agentId === undefined))
+      );
+    }
+    return [];
+  }, [messages, currentTab, selectedAgent]);
+
   // Handle sending a message
   const handleSendMessage = () => {
     if (input.trim() === '') return;
@@ -180,7 +193,8 @@ const ChatWidget = () => {
       id: Date.now().toString(),
       text: input,
       sender: 'user',
-      timestamp: new Date()
+      timestamp: new Date(),
+      ...(currentTab === 'live' && selectedAgent ? { agentId: selectedAgent } : {})
     };
     
     setMessages(prev => [...prev, newMessage]);
@@ -215,7 +229,7 @@ const ChatWidget = () => {
           ];
         });
       }, 1500);
-    } else if (currentTab === 'live' && agentConnected) {
+    } else if (currentTab === 'live' && agentConnected && selectedAgent) {
       // Simulate agent typing indicator
       const typingMessage: Message = {
         id: `typing-${Date.now()}`,
@@ -407,7 +421,7 @@ const ChatWidget = () => {
               <TabsContent value="chatbot" className="flex-1 flex flex-col px-4 pt-3 pb-4 max-h-full">
                 <div className="flex-1 overflow-y-auto pr-1 scrollbar-thin custom-scrollbar" style={{ maxHeight: 'calc(100% - 120px)' }}>
                   <div className="space-y-4">
-                    {messages.filter(msg => msg.sender !== 'agent').map((message) => (
+                    {filteredMessages.map((message) => (
                       <motion.div 
                         key={message.id} 
                         className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
@@ -475,7 +489,7 @@ const ChatWidget = () => {
                   </div>
                 </div>
                 
-                {showSuggestions && messages.length <= 2 && (
+                {showSuggestions && filteredMessages.length <= 2 && (
                   <motion.div 
                     className="mb-4 mt-2"
                     initial={{ opacity: 0, y: 10 }}
@@ -679,7 +693,7 @@ const ChatWidget = () => {
                         
                         <div className="flex-1 overflow-y-auto pr-1 scrollbar-thin custom-scrollbar" style={{ maxHeight: 'calc(100% - 150px)' }}>
                           <div className="space-y-4">
-                            {messages.filter(msg => msg.sender !== 'bot').map((message) => (
+                            {filteredMessages.map((message) => (
                               <motion.div 
                                 key={message.id} 
                                 className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}

@@ -1,6 +1,4 @@
 import React, { useState, useMemo } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import AgentCard from "@/components/agent/AgentCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -180,8 +178,6 @@ const Agents = () => {
   
   return (
     <div className="min-h-screen">
-      <Navbar />
-      
       {/* Hero Section */}
       <div className="relative bg-gradient-to-r from-estate-navy to-slate-800 text-white py-16 mb-12">
         <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1973&auto=format&fit=crop')] bg-cover bg-center"></div>
@@ -336,8 +332,6 @@ const Agents = () => {
           </Button>
         </section>
       </main>
-      
-      <Footer />
     </div>
   );
   

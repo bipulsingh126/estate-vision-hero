@@ -1,6 +1,4 @@
 import React, { useState, useMemo } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import ExpertProfile from "@/components/agent/ExpertProfile";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -29,11 +27,11 @@ import {
   CalendarClock,
   BookOpen,
   Building,
-  Home
+  Home,
+  AlertCircle
 } from "lucide-react";
 
-// Import the sample agent data from the Agents page
-// In a real app, this would be fetched from an API
+// Import the sample agent data from data folder
 import { sampleAgents, specialties } from "@/data/expertData";
 
 const expertCategories = [
@@ -43,15 +41,53 @@ const expertCategories = [
   { id: "experience", label: "Most Experienced", icon: <CalendarClock className="h-4 w-4 mr-2" /> },
 ];
 
+// Fallback data in case the import fails
+const fallbackAgents: Agent[] = [
+  {
+    id: "1",
+    name: "Sarah Johnson",
+    title: "Senior Real Estate Agent",
+    email: "sarah.j@estatevision.com",
+    phone: "(555) 123-4567",
+    imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&auto=format&fit=crop&q=60",
+    bio: "With over a decade of experience in luxury real estate, Sarah specializes in high-end properties and investment opportunities.",
+    specialties: ["Luxury Homes", "Investment Properties", "Waterfront", "Urban Estates"],
+    experience: 12,
+    listings: ["1", "5", "10", "16"]
+  },
+  {
+    id: "2",
+    name: "Michael Chen",
+    title: "Commercial Property Specialist",
+    email: "michael.c@estatevision.com",
+    phone: "(555) 234-5678",
+    imageUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&auto=format&fit=crop&q=60",
+    bio: "Michael specializes in commercial real estate and has helped numerous businesses find their perfect location.",
+    specialties: ["Commercial", "Retail Spaces", "Office Buildings", "Industrial"],
+    experience: 8,
+    listings: ["2", "7", "12"]
+  }
+];
+
+const fallbackSpecialties = [
+  { id: 'luxury', name: 'Luxury Homes' },
+  { id: 'commercial', name: 'Commercial' },
+  { id: 'residential', name: 'Residential' }
+];
+
 const MeetExperts = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedSpecialty, setSelectedSpecialty] = useState("any");
   const [selectedExperience, setSelectedExperience] = useState("any");
   
+  // Use imported data or fallback to our local data if there's an error
+  const agentsData = Array.isArray(sampleAgents) && sampleAgents.length > 0 ? sampleAgents : fallbackAgents;
+  const specialtiesData = specialties || fallbackSpecialties;
+  
   // Filter experts based on search and filters
   const filteredExperts = useMemo(() => {
-    return sampleAgents.filter(agent => {
+    return agentsData.filter(agent => {
       // Text search
       if (searchTerm && !agent.name.toLowerCase().includes(searchTerm.toLowerCase()) && 
           !agent.bio.toLowerCase().includes(searchTerm.toLowerCase()) &&
@@ -92,14 +128,14 @@ const MeetExperts = () => {
       
       return true;
     });
-  }, [searchTerm, selectedCategory, selectedSpecialty, selectedExperience]);
+  }, [searchTerm, selectedCategory, selectedSpecialty, selectedExperience, agentsData]);
   
   // Get featured experts (top 3 by experience)
   const featuredExperts = useMemo(() => {
-    return [...sampleAgents]
+    return [...agentsData]
       .sort((a, b) => b.experience - a.experience)
       .slice(0, 3);
-  }, []);
+  }, [agentsData]);
   
   const resetFilters = () => {
     setSearchTerm("");
@@ -108,10 +144,26 @@ const MeetExperts = () => {
     setSelectedExperience("any");
   };
   
+  // If there's a major data loading issue, show a friendly error
+  if (!agentsData || agentsData.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="text-center max-w-md">
+          <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+          <h1 className="text-2xl font-bold mb-2">Data Loading Error</h1>
+          <p className="text-gray-600 mb-4">
+            We're having trouble loading the experts data. Please try refreshing the page or check back later.
+          </p>
+          <Button onClick={() => window.location.reload()}>
+            Refresh Page
+          </Button>
+        </div>
+      </div>
+    );
+  }
+  
   return (
     <div className="min-h-screen">
-      <Navbar />
-      
       {/* Hero Section */}
       <div className="relative bg-gradient-to-r from-estate-navy to-slate-800 text-white py-20">
         <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1577415124269-fc1140a69e91?q=80&w=1974&auto=format&fit=crop')] bg-cover bg-center"></div>
@@ -213,7 +265,7 @@ const MeetExperts = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="any">Any Specialty</SelectItem>
-                {specialties.map((specialty) => (
+                {specialtiesData.map((specialty) => (
                   <SelectItem key={specialty.id} value={specialty.name}>
                     {specialty.name}
                   </SelectItem>
@@ -292,8 +344,6 @@ const MeetExperts = () => {
           </Button>
         </section>
       </main>
-      
-      <Footer />
     </div>
   );
 };

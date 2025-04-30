@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Property } from '@/types/property';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PropertyTour } from '@/components/property/PropertyTour';
@@ -172,7 +170,6 @@ const PropertyPage: React.FC = () => {
   if (loading) {
     return (
       <div className="flex flex-col min-h-screen">
-        <Navbar />
         <main className="flex-1 flex items-center justify-center p-6">
           <div className="animate-pulse space-y-8 w-full max-w-6xl">
             <div className="h-96 bg-slate-200 rounded-lg w-full"></div>
@@ -186,7 +183,6 @@ const PropertyPage: React.FC = () => {
             </div>
           </div>
         </main>
-        <Footer />
       </div>
     );
   }
@@ -194,20 +190,17 @@ const PropertyPage: React.FC = () => {
   if (!property) {
     return (
       <div className="flex flex-col min-h-screen">
-        <Navbar />
         <main className="flex-1 flex flex-col items-center justify-center p-6">
           <h1 className="text-2xl font-semibold mb-4">Property Not Found</h1>
           <p className="text-muted-foreground mb-6">The property you're looking for doesn't exist or has been removed.</p>
           <Button onClick={() => navigate('/properties')}>Browse Properties</Button>
         </main>
-        <Footer />
       </div>
     );
   }
   
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
       <main className="flex-1 container py-8 px-4 md:px-6">
         {/* Back Button */}
         <Button 
@@ -655,7 +648,6 @@ const PropertyPage: React.FC = () => {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 };
