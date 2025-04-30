@@ -40,7 +40,6 @@ import {
   Star,
   Sparkles,
   Video,
-  Cube3d,
   ArrowRight,
   RefreshCw
 } from 'lucide-react';
@@ -508,4 +507,4 @@ export const AdvancedPropertySearch: React.FC<AdvancedPropertySearchProps> = ({
   );
 };
 
-export default AdvancedPropertySearch; 
+export default AdvancedPropertySearch;

@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { siteConfig } from "@/config/site";
@@ -16,13 +17,14 @@ import { Menu, User } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
+// Updated navigation to include protected property
 const navigation = [
-  { name: "Home", href: "/", id: "home" },
-  { name: "Properties", href: "/properties", id: "properties" },
-  { name: "Agents", href: "/agents", id: "agents" },
-  { name: "Meet Our Experts", href: "/meet-experts", id: "meet-experts" },
-  { name: "About", href: "/about", id: "about" },
-  { name: "Contact", href: "/contact", id: "contact" },
+  { name: "Home", href: "/", id: "home", protected: false },
+  { name: "Properties", href: "/properties", id: "properties", protected: false },
+  { name: "Agents", href: "/agents", id: "agents", protected: false },
+  { name: "Meet Our Experts", href: "/meet-experts", id: "meet-experts", protected: false },
+  { name: "About", href: "/about", id: "about", protected: false },
+  { name: "Contact", href: "/contact", id: "contact", protected: false },
 ];
 
 const Navbar = () => {

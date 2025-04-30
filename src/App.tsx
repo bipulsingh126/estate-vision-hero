@@ -19,13 +19,14 @@ import GuestOnlyRoute from './components/GuestOnlyRoute';
 import { ThemeProvider } from './components/ThemeProvider';
 import ChatWidget from './components/ChatWidget';
 import { AuthProvider } from './context/AuthContext';
+import NotFound from './pages/NotFound';
 
 const App = () => {
   return (
     <AuthProvider>
       <ThemeProvider>
         <Router>
-          <div className="flex flex-col min-h-screen">
+          <div className="flex flex-col min-h-screen relative">
             <Navbar />
 
             <main className="flex-grow">
@@ -53,12 +54,18 @@ const App = () => {
                   </ProtectedRoute>
                 } />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="*" element={<Navigate to="/" />} />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
 
             <Footer />
-            <ChatWidget />
+            
+            {/* ChatWidget with proper z-index and positioning */}
+            <div className="fixed z-50 bottom-6 right-6" style={{ pointerEvents: 'none' }}>
+              <div style={{ pointerEvents: 'auto' }}>
+                <ChatWidget />
+              </div>
+            </div>
           </div>
         </Router>
       </ThemeProvider>
