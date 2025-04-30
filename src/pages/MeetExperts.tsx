@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Agent } from "@/types/agent";
+import { useAuth } from "@/context/AuthContext";
+import AuthRequiredAlert from "@/components/AuthRequiredAlert";
 import { 
   Search, 
   Users, 
@@ -76,6 +78,7 @@ const fallbackSpecialties = [
 ];
 
 const MeetExperts = () => {
+  const { isAuthenticated } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedSpecialty, setSelectedSpecialty] = useState("any");
@@ -143,6 +146,15 @@ const MeetExperts = () => {
     setSelectedSpecialty("any");
     setSelectedExperience("any");
   };
+  
+  // Security check - if somehow the user got here without authentication
+  if (!isAuthenticated) {
+    return (
+      <AuthRequiredAlert 
+        description="You need to be logged in to view our expert profiles. Redirecting to login page..."
+      />
+    );
+  }
   
   // If there's a major data loading issue, show a friendly error
   if (!agentsData || agentsData.length === 0) {

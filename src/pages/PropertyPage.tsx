@@ -10,6 +10,7 @@ import { AgentCard } from '@/components/property/AgentCard';
 import { Separator } from '@/components/ui/separator';
 import { CardContent, Card } from '@/components/ui/card';
 import { Calendar } from '@/components/ui/calendar';
+import AuthRequiredAlert from '@/components/AuthRequiredAlert';
 import {
   Heart,
   Share,
@@ -89,11 +90,20 @@ const getPropertyById = (id: string): Property | undefined => {
 const PropertyPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [isSaved, setIsSaved] = useState(false);
   const [date, setDate] = useState<Date | undefined>(undefined);
-  const { isAuthenticated } = useAuth();
+  
+  // Security check - if somehow the user got here without authentication
+  if (!isAuthenticated) {
+    return (
+      <AuthRequiredAlert 
+        description="You need to be logged in to view property details. Redirecting to login page..."
+      />
+    );
+  }
   
   useEffect(() => {
     // Simulate API call

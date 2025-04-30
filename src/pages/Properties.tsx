@@ -7,9 +7,10 @@ import PropertySearchResults from '@/components/property/PropertySearchResults';
 import { PropertyTabs } from '@/components/property/tabs/PropertyTabs';
 import { PropertyPagination } from '@/components/property/pagination/PropertyPagination';
 import { applyFilters, isFilterActive, getDefaultFilters } from '@/components/property/filters/PropertyFilterUtils';
+import AuthRequiredAlert from '@/components/AuthRequiredAlert';
 
 const Properties = () => {
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const [properties] = useState<Property[]>(sampleProperties);
   const [filteredProperties, setFilteredProperties] = useState<Property[]>(sampleProperties);
   const [activeTab, setActiveTab] = useState<string>("all");
@@ -82,6 +83,11 @@ const Properties = () => {
     
     setPaginatedProperties(filteredProperties.slice(startIndex, endIndex));
   }, [filteredProperties, currentPage, itemsPerPage]);
+
+  // Security check - if somehow the user got here without authentication
+  if (!isAuthenticated) {
+    return <AuthRequiredAlert description="You need to be logged in to view properties. Redirecting to login page..." />;
+  }
 
   return (
     <div className="min-h-screen bg-background">

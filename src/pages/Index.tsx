@@ -10,7 +10,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCircle, Home, MapPin, Star, BadgeCheck, Building, DollarSign, Calculator } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { CheckCircle, Home, MapPin, Star, BadgeCheck, Building, DollarSign, Calculator, Lock, AlertTriangle, Info } from "lucide-react";
 import * as FramerMotion from "framer-motion";
 const { motion } = FramerMotion;
 
@@ -117,9 +118,41 @@ const Index = () => {
       {/* Header + Hero */}
       <Hero />
       
+      {/* Authentication notice banner (visible only to non-authenticated users) */}
+      {!isAuthenticated && (
+        <div className="bg-estate-navy text-white py-3 px-4">
+          <div className="container-custom flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-2">
+              <Info className="h-5 w-5" />
+              <p className="text-sm md:text-base">
+                Register and log in to view our full property listings, agent profiles, and expert information.
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Button size="sm" variant="outline" className="text-white border-white hover:bg-white/20" asChild>
+                <Link to="/login">Log In</Link>
+              </Button>
+              <Button size="sm" className="bg-estate-gold hover:bg-amber-500" asChild>
+                <Link to="/register">Register</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+      
       {/* Featured Listings with Search - Preview Only */}
       <div className="container-custom">
         <FeaturedListings isPreview={true} />
+        
+        {!isAuthenticated && (
+          <Alert className="my-6 border-amber-200 bg-amber-50">
+            <AlertTriangle className="h-4 w-4 text-amber-600" />
+            <AlertTitle className="text-amber-800">Authentication Required</AlertTitle>
+            <AlertDescription className="text-amber-700">
+              You need to register and log in to view full property details and contact agents.
+            </AlertDescription>
+          </Alert>
+        )}
         
         <div className="my-12 text-center">
           <h3 className="text-xl font-semibold mb-4">
@@ -129,9 +162,14 @@ const Index = () => {
           </h3>
           <Button size="lg" asChild>
             <Link to={isAuthenticated ? "/properties" : "/login"}>
-              {isAuthenticated ? "View All Properties" : "Sign In or Register"}
+              {isAuthenticated ? "View All Properties" : "Sign In Now"}
             </Link>
           </Button>
+          {!isAuthenticated && (
+            <p className="mt-2 text-sm text-gray-500">
+              Don't have an account? <Link to="/register" className="text-estate-gold hover:underline">Register here</Link>
+            </p>
+          )}
         </div>
       </div>
       
@@ -198,6 +236,17 @@ const Index = () => {
             </motion.p>
           </motion.div>
           
+          {!isAuthenticated && (
+            <Alert className="mb-8 border-estate-gold/20 bg-estate-gold/5">
+              <Lock className="h-4 w-4 text-estate-gold" />
+              <AlertTitle>Authentication Required</AlertTitle>
+              <AlertDescription>
+                Full agent profiles are only available to registered users. 
+                <Link to="/register" className="ml-1 text-estate-gold hover:underline">Register now</Link> to connect with our agents.
+              </AlertDescription>
+            </Alert>
+          )}
+          
           <motion.div 
             variants={containerVariants}
             initial="hidden"
@@ -230,8 +279,10 @@ const Index = () => {
                   </div>
                 </div>
                 <div className="bg-gray-50 p-4 text-center">
-                  <Link to="/meet-experts">
-                    <Button variant="outline" size="sm">View Profile</Button>
+                  <Link to={isAuthenticated ? "/meet-experts" : "/login"}>
+                    <Button variant={isAuthenticated ? "outline" : "default"} size="sm">
+                      {isAuthenticated ? "View Profile" : "Sign In to View"}
+                    </Button>
                   </Link>
                 </div>
               </motion.div>
@@ -239,9 +290,9 @@ const Index = () => {
           </motion.div>
           
           <div className="text-center mt-10">
-            <Link to="/meet-experts">
+            <Link to={isAuthenticated ? "/meet-experts" : "/login"}>
               <Button variant="outline">
-                View All Agents
+                {isAuthenticated ? "View All Agents" : "Sign In to View All Agents"}
               </Button>
             </Link>
           </div>

@@ -18,6 +18,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Agent } from "@/types/agent";
 import { Search, Users, Star, Filter, Award, MapPin } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import AuthRequiredAlert from "@/components/AuthRequiredAlert";
 
 // Sample agent data
 const sampleAgents: Agent[] = [
@@ -115,6 +117,7 @@ const specialties = [
 ];
 
 const Agents = () => {
+  const { isAuthenticated } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSpecialty, setSelectedSpecialty] = useState("any");
   const [selectedExperience, setSelectedExperience] = useState("any");
@@ -175,6 +178,15 @@ const Agents = () => {
     setSelectedLocation("");
     setActiveFilter("all");
   };
+  
+  // Security check - if somehow the user got here without authentication
+  if (!isAuthenticated) {
+    return (
+      <AuthRequiredAlert 
+        description="You need to be logged in to view our agent profiles. Redirecting to login page..."
+      />
+    );
+  }
   
   return (
     <div className="min-h-screen">

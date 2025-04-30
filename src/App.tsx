@@ -33,8 +33,16 @@ const App = () => {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/properties" element={<Properties />} />
-                <Route path="/property/:id" element={<PropertyDetail />} />
+                <Route path="/properties" element={
+                  <ProtectedRoute>
+                    <Properties />
+                  </ProtectedRoute>
+                } />
+                <Route path="/property/:id" element={
+                  <ProtectedRoute>
+                    <PropertyDetail />
+                  </ProtectedRoute>
+                } />
                 <Route path="/login" element={
                   <GuestOnlyRoute>
                     <Login />
@@ -45,9 +53,21 @@ const App = () => {
                     <Register />
                   </GuestOnlyRoute>
                 } />
-                <Route path="/meet-experts" element={<MeetExperts />} />
-                <Route path="/agents" element={<Agents />} />
-                <Route path="/agents/:id" element={<AgentDetail />} />
+                <Route path="/meet-experts" element={
+                  <ProtectedRoute>
+                    <MeetExperts />
+                  </ProtectedRoute>
+                } />
+                <Route path="/agents" element={
+                  <ProtectedRoute>
+                    <Agents />
+                  </ProtectedRoute>
+                } />
+                <Route path="/agents/:id" element={
+                  <ProtectedRoute>
+                    <AgentDetail />
+                  </ProtectedRoute>
+                } />
                 <Route path="/profile" element={
                   <ProtectedRoute>
                     <Profile />
