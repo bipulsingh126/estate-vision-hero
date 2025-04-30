@@ -1,8 +1,8 @@
-
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 import { Property } from '@/types/property';
 import { createCustomIcon } from './MapIcons';
+import { formatCurrency } from '@/lib/utils';
 
 interface PropertyMarkerProps {
   property: Property;
@@ -23,40 +23,74 @@ export const PropertyMarker: React.FC<PropertyMarkerProps> = ({
   handleViewDetails,
   handleLearnMore
 }) => {
+  // Create icon once with useMemo to avoid recreating it on each render
+  const markerIcon = useMemo(() => 
+    createCustomIcon(property, isSelected, isFeatured), 
+    [property, isSelected, isFeatured]
+  );
+  
+  // Create event handlers with useCallback to avoid recreating functions
+  const onMarkerClick = useCallback(() => {
+    handleMarkerClick(property);
+  }, [property, handleMarkerClick]);
+  
+  const onToggleFeatured = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    toggleFeatured(property);
+  }, [property, toggleFeatured]);
+  
+  const onViewDetails = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    handleViewDetails(property);
+  }, [property, handleViewDetails]);
+  
+  const onLearnMore = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    handleLearnMore(property);
+  }, [property, handleLearnMore]);
+  
+  // Ensure we have valid coordinates
+  const position = useMemo(() => 
+    [property.lat || 0, property.lng || 0] as [number, number], 
+    [property.lat, property.lng]
+  );
+  
   return (
     <Marker
-      position={[property.lat || 0, property.lng || 0]}
+      position={position}
+      icon={markerIcon}
       eventHandlers={{
-        click: () => handleMarkerClick(property)
+        click: onMarkerClick
       }}
     >
       {isSelected && (
         <Popup>
-          <div className="p-2">
+          <div className="p-2 min-w-[200px]">
             <h3 className="font-semibold text-estate-navy">{property.title}</h3>
             <p className="text-sm text-slate-500">{property.address}</p>
-            <div className="mt-2 flex gap-2">
+            <p className="text-sm font-medium text-estate-navy mt-1">{formatCurrency(property.price)}</p>
+            <div className="mt-2 flex flex-wrap gap-2">
               <button 
-                onClick={() => toggleFeatured(property)}
+                onClick={onToggleFeatured}
                 className={`text-xs px-2 py-1 rounded-full border ${
                   isFeatured 
                     ? 'bg-estate-pink text-white border-estate-pink' 
                     : 'bg-white text-slate-700 border-slate-200'
                 }`}
               >
-                {isFeatured ? 'Remove Featured' : 'Mark Featured'}
+                {isFeatured ? 'Unfeature' : 'Feature'}
               </button>
               <button 
-                onClick={() => handleViewDetails(property)}
+                onClick={onViewDetails}
                 className="text-xs px-2 py-1 rounded-full bg-estate-gold text-white border border-estate-gold"
               >
-                View Details
+                Details
               </button>
               <button 
-                onClick={() => handleLearnMore(property)}
+                onClick={onLearnMore}
                 className="text-xs px-2 py-1 rounded-full bg-estate-navy text-white border border-estate-navy"
               >
-                Learn More
+                View
               </button>
             </div>
           </div>
