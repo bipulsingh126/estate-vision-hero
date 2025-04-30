@@ -101,7 +101,7 @@ const PropertyMap: React.FC<PropertyMapProps> = ({ properties }) => {
         
         <div style={{ height: 'calc(100% - 36px)', width: '100%' }}>
           <MapContainer 
-            defaultCenter={[20.5937, 78.9629]} 
+            center={[20.5937, 78.9629]} 
             zoom={5} 
             minZoom={4}
             maxZoom={18}
