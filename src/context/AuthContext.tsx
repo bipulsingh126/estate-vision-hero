@@ -23,6 +23,7 @@ type ProfileUpdateData = {
 type AuthContextType = {
   user: User | null;
   isAuthenticated: boolean;
+  isLoading: boolean;
   login: (email: string, password: string) => Promise<boolean>;
   register: (name: string, email: string, password: string) => Promise<boolean>;
   logout: () => void;
@@ -34,14 +35,28 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // Check for existing user session on mount
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-      setIsAuthenticated(true);
-    }
+    const checkAuthStatus = () => {
+      const storedUser = localStorage.getItem('user');
+      
+      if (storedUser) {
+        try {
+          const parsedUser = JSON.parse(storedUser);
+          setUser(parsedUser);
+          setIsAuthenticated(true);
+        } catch (error) {
+          console.error("Failed to parse stored user data", error);
+          localStorage.removeItem('user');
+        }
+      }
+      
+      setIsLoading(false);
+    };
+
+    checkAuthStatus();
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
@@ -138,10 +153,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     toast.success('Logged out successfully');
   };
 
+  // Don't render children until we've checked if the user is logged in
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="h-16 w-16 animate-spin rounded-full border-b-2 border-t-2 border-estate-gold"></div>
+      </div>
+    );
+  }
+
   return (
     <AuthContext.Provider value={{ 
       user, 
-      isAuthenticated, 
+      isAuthenticated,
+      isLoading,
       login, 
       register, 
       logout,

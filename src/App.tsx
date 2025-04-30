@@ -8,9 +8,14 @@ import About from './pages/About';
 import Properties from './pages/Properties';
 import PropertyDetail from './pages/PropertyPage';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Contact from './pages/Contact';
+import MeetExperts from './pages/MeetExperts';
+import Agents from './pages/Agents';
+import AgentDetail from './pages/AgentDetail';
 import ProtectedRoute from './components/ProtectedRoute';
+import GuestOnlyRoute from './components/GuestOnlyRoute';
 import { ThemeProvider } from './components/ThemeProvider';
 import ChatWidget from './components/ChatWidget';
 import { AuthProvider } from './context/AuthContext';
@@ -29,7 +34,19 @@ const App = () => {
                 <Route path="/about" element={<About />} />
                 <Route path="/properties" element={<Properties />} />
                 <Route path="/property/:id" element={<PropertyDetail />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/login" element={
+                  <GuestOnlyRoute>
+                    <Login />
+                  </GuestOnlyRoute>
+                } />
+                <Route path="/register" element={
+                  <GuestOnlyRoute>
+                    <Register />
+                  </GuestOnlyRoute>
+                } />
+                <Route path="/meet-experts" element={<MeetExperts />} />
+                <Route path="/agents" element={<Agents />} />
+                <Route path="/agents/:id" element={<AgentDetail />} />
                 <Route path="/profile" element={
                   <ProtectedRoute>
                     <Profile />

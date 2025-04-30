@@ -105,7 +105,12 @@ const contactInfo = [
   },
 ];
 
-const ContactForm = () => {
+// At the top of the file, after the imports and formSchema definition
+interface ContactFormProps {
+  embedded?: boolean;
+}
+
+const ContactForm = ({ embedded = false }: ContactFormProps) => {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -207,7 +212,139 @@ const ContactForm = () => {
     }
   };
 
-  return (
+  return embedded ? (
+    // Embedded version (simpler, just the form itself)
+    <div className="w-full">
+      {isSuccess ? (
+        <motion.div 
+          variants={successVariants}
+          initial="hidden"
+          animate="visible"
+          className="bg-green-50 border border-green-100 rounded-lg p-6 text-center"
+        >
+          <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h3 className="text-xl font-bold text-green-800 mb-2">Message Sent!</h3>
+          <p className="text-green-700">
+            Thank you for reaching out to us. Our team will get back to you as soon as possible.
+          </p>
+        </motion.div>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label htmlFor="name">Name <span className="text-red-500">*</span></Label>
+              <Input
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Your full name"
+                className={errors.name ? "border-red-500" : ""}
+              />
+              {errors.name && (
+                <p className="text-red-500 text-sm">{errors.name}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="email">Email <span className="text-red-500">*</span></Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Your email address"
+                className={errors.email ? "border-red-500" : ""}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label htmlFor="phone">Phone (Optional)</Label>
+              <Input
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Your phone number"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="subject">Subject <span className="text-red-500">*</span></Label>
+              <Select 
+                onValueChange={handleSelectChange}
+                value={formData.subject}
+              >
+                <SelectTrigger 
+                  id="subject" 
+                  className={errors.subject ? "border-red-500" : ""}
+                >
+                  <SelectValue placeholder="Select a topic" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="general">General Inquiry</SelectItem>
+                  <SelectItem value="buying">Buying a Property</SelectItem>
+                  <SelectItem value="selling">Selling a Property</SelectItem>
+                  <SelectItem value="renting">Renting</SelectItem>
+                  <SelectItem value="careers">Careers</SelectItem>
+                  <SelectItem value="support">Technical Support</SelectItem>
+                </SelectContent>
+              </Select>
+              {errors.subject && (
+                <p className="text-red-500 text-sm">{errors.subject}</p>
+              )}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="message">Message <span className="text-red-500">*</span></Label>
+            <Textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              placeholder="How can we help you?"
+              rows={5}
+              className={errors.message ? "border-red-500" : ""}
+            />
+            {errors.message && (
+              <p className="text-red-500 text-sm">{errors.message}</p>
+            )}
+          </div>
+
+          <Button 
+            type="submit" 
+            className="bg-estate-gold hover:bg-estate-gold/90 text-black w-full"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Sending...
+              </>
+            ) : (
+              <>
+                Send Message <Send className="ml-2 h-4 w-4" />
+              </>
+            )}
+          </Button>
+        </form>
+      )}
+    </div>
+  ) : (
     <section className="py-24 bg-gradient-to-b from-white to-slate-50 relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-estate-gold/5 rounded-full -translate-y-1/2 translate-x-1/3 -z-10"></div>
