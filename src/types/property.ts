@@ -1,3 +1,4 @@
+
 export interface Property {
   id: string;
   title: string;
@@ -18,6 +19,9 @@ export interface Property {
   tourUrlVirtual?: string; // URL for Virtual Tour
   lat?: number; // Latitude for map location
   lng?: number; // Longitude for map location
+  type?: string; // Property type like 'Apartment', 'House', etc.
+  yearBuilt?: string; // Year the property was built
+  lotSize?: number; // Size of the lot in square feet
 }
 
 export interface PropertyCardProps {
@@ -38,4 +42,3 @@ export interface PropertyFilters {
   status?: string;
   sortBy?: 'price-asc' | 'price-desc' | 'newest' | 'oldest';
 }
-

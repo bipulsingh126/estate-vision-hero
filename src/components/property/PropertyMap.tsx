@@ -222,7 +222,7 @@ const PropertyMap: React.FC<PropertyMapProps> = ({ properties }) => {
         
         <div style={{ height: 'calc(100% - 36px)', width: '100%' }}>
           <MapContainer 
-            center={[20.5937, 78.9629]} 
+            defaultCenter={[20.5937, 78.9629]} 
             zoom={5} 
             minZoom={4}
             maxZoom={18}
@@ -254,8 +254,8 @@ const PropertyMap: React.FC<PropertyMapProps> = ({ properties }) => {
                   }}
                 >
                   {isSelected && (
-                    <Popup className="custom-popup" minWidth={280} maxWidth={280}>
-                      <div className="w-[280px] pb-1">
+                    <Popup minWidth={280} maxWidth={280}>
+                      <div className="w-[280px] pb-1 custom-popup">
                         <div className="relative h-32 mb-2">
                           <img 
                             src={property.imageUrl} 
@@ -376,4 +376,4 @@ const PropertyMap: React.FC<PropertyMapProps> = ({ properties }) => {
   );
 };
 
-export default PropertyMap; 
+export default PropertyMap;
