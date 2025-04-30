@@ -101,7 +101,7 @@ const PropertyMap: React.FC<PropertyMapProps> = ({ properties }) => {
         
         <div style={{ height: 'calc(100% - 36px)', width: '100%' }}>
           <MapContainer 
-            center={[20.5937, 78.9629]} 
+            defaultCenter={[20.5937, 78.9629]} 
             zoom={5} 
             minZoom={4}
             maxZoom={18}
@@ -109,8 +109,8 @@ const PropertyMap: React.FC<PropertyMapProps> = ({ properties }) => {
             zoomControl={false}
           >
             <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
             <ZoomControl position="bottomright" />
             <MapBoundsControl 

@@ -15,6 +15,7 @@ export interface Property {
   description?: string;
   propertyType?: string; // Added for search filtering
   city?: string; // Added for search filtering
+  cityName?: string; // Added for popup display
   tourUrl3D?: string; // URL for 3D Tour
   tourUrlVirtual?: string; // URL for Virtual Tour
   lat?: number; // Latitude for map location
